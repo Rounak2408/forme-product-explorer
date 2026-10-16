@@ -1,6 +1,8 @@
 # FORME - Product Explorer
 
-A clean, modern product discovery web application built with **React**, **TypeScript**, and **Vite** for the TechCrestaX Web Developer practical assessment. 
+> **Round 2 Web Developer Practical Assessment — TechCrestaX**
+
+A clean, modern product discovery web application built with **React**, **TypeScript**, and **Vite** for the **Round 2 Web Developer Practical Assessment by TechCrestaX**.
 
 The app allows users to search products in real-time, filter by category, sort by price, save items to a wishlist, view item details in a modal, and place an order with an instant confirmation popup.
 
@@ -107,3 +109,11 @@ npm run build
 3. Import this repository.
 4. Framework preset will automatically be detected as **Vite**.
 5. Click **Deploy**.
+
+---
+
+## Submission Details
+
+- **Assessment:** Round 2 Web Developer Practical Assessment
+- **Organization:** TechCrestaX
+- **Repository:** [https://github.com/Rounak2408/forme-product-explorer](https://github.com/Rounak2408/forme-product-explorer)
