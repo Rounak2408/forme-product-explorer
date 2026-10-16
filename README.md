@@ -217,7 +217,7 @@ This application is ready for zero-configuration deployment to [Vercel](https://
    ```bash
    vercel
    ```
-3. Follow the CLI prompts:
+3. Follow the CLI prompts :
    - **Framework Preset**: `Vite`
    - **Build Command**: `npm run build`
    - **Output Directory**: `dist`
