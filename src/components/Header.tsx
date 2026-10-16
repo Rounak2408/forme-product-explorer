@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Heart, Search } from 'lucide-react';
+import { Heart, Search } from 'lucide-react';
 
 interface HeaderProps {
   wishlistCount: number;
@@ -65,12 +65,6 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
             <span className="action-btn-label">Wishlist</span>
           </button>
-
-          {/* Editorial Edition Badge */}
-          <div className="edition-tag" title="Editorial Edition 2025">
-            <Sparkles size={13} className="edition-icon" aria-hidden="true" />
-            <span>Edition 04</span>
-          </div>
         </div>
       </div>
     </header>

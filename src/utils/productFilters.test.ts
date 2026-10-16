@@ -13,13 +13,13 @@ test('Mandatory Test Suite: Advanced Product Search and Filtering Pipeline', asy
 
   await t.test('2. Search by full product name', () => {
     const filters: FilterState = {
-      searchQuery: 'Acoustic Studio ANC Headphones',
+      searchQuery: 'Studio ANC Headphones',
       category: 'All',
       sortBy: 'featured'
     };
     const result = filterAndSortProducts(PRODUCTS, filters);
     assert.equal(result.length, 1);
-    assert.equal(result[0].name, 'Acoustic Studio ANC Headphones');
+    assert.equal(result[0].name, 'Studio ANC Headphones');
   });
 
   await t.test('3. Search by partial product name', () => {
