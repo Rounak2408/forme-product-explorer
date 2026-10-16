@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import type { Product } from '../types/product';
 import { formatINR } from '../utils/productFilters';
-import { X, Trash2, Heart, ArrowRight } from 'lucide-react';
+import { X, Trash2, Heart, ArrowRight, ShoppingBag, ShieldCheck } from 'lucide-react';
 
 interface WishlistDrawerProps {
   isOpen: boolean;
@@ -10,6 +10,8 @@ interface WishlistDrawerProps {
   onRemoveItem: (productId: string) => void;
   onClearWishlist: () => void;
   onSelectProduct: (product: Product) => void;
+  onBuyItem: (product: Product) => void;
+  onBuyAll: () => void;
 }
 
 export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
@@ -18,7 +20,9 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
   onClose,
   onRemoveItem,
   onClearWishlist,
-  onSelectProduct
+  onSelectProduct,
+  onBuyItem,
+  onBuyAll
 }) => {
   // Close on Escape
   useEffect(() => {
@@ -38,6 +42,8 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+
+  const totalAmount = wishlistProducts.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <div
@@ -129,6 +135,19 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
                     <span className="drawer-item-price">
                       {formatINR(product.price)}
                     </span>
+                    
+                    {/* Item Buy Button */}
+                    <div className="drawer-item-actions-row">
+                      <button
+                        type="button"
+                        className="drawer-item-buy-btn"
+                        onClick={() => onBuyItem(product)}
+                        aria-label={`Buy ${product.name} now for ${formatINR(product.price)}`}
+                      >
+                        <ShoppingBag size={13} aria-hidden="true" />
+                        <span>Buy Now</span>
+                      </button>
+                    </div>
                   </div>
 
                   <button
@@ -146,17 +165,32 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
           )}
         </div>
 
-        {/* Drawer Footer */}
+        {/* Drawer Footer with Checkout */}
         {wishlistProducts.length > 0 && (
           <div className="drawer-footer">
             <div className="drawer-summary-row">
-              <span>Saved Items Total:</span>
+              <span className="drawer-summary-label">Total Amount:</span>
               <strong className="drawer-total-amount">
-                {formatINR(
-                  wishlistProducts.reduce((sum, item) => sum + item.price, 0)
-                )}
+                {formatINR(totalAmount)}
               </strong>
             </div>
+
+            <div className="drawer-guarantee-note">
+              <ShieldCheck size={14} aria-hidden="true" />
+              <span>Complimentary shipping & 14-day returns included</span>
+            </div>
+
+            {/* Prominent Buy All / Checkout Button */}
+            <button
+              type="button"
+              className="drawer-checkout-btn"
+              onClick={onBuyAll}
+              aria-label={`Buy all ${wishlistProducts.length} items for ${formatINR(totalAmount)}`}
+            >
+              <ShoppingBag size={18} aria-hidden="true" />
+              <span>Checkout All Items ({wishlistProducts.length})</span>
+            </button>
+
             <button
               type="button"
               className="drawer-clear-all-btn"

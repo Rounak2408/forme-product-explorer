@@ -10,8 +10,17 @@ import { ProductGrid } from './components/ProductGrid';
 import { EmptyState } from './components/EmptyState';
 import { ProductModal } from './components/ProductModal';
 import { WishlistDrawer } from './components/WishlistDrawer';
+import { OrderSuccessModal, type OrderData } from './components/OrderSuccessModal';
 import { Footer } from './components/Footer';
 import './App.css';
+
+const getFormattedDate = (): string => {
+  return new Intl.DateTimeFormat('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  }).format(new Date());
+};
 
 export const App: React.FC = () => {
   // Single source of truth for filter state
@@ -31,15 +40,15 @@ export const App: React.FC = () => {
     }
   });
 
-
+  // Drawer & Modal states
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
-
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [orderData, setOrderData] = useState<OrderData | null>(null);
 
-  
+  // Ref for search input in Hero section
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  
+  // Synchronize wishlist to localStorage safely
   useEffect(() => {
     try {
       localStorage.setItem(
@@ -47,7 +56,7 @@ export const App: React.FC = () => {
         JSON.stringify(Array.from(wishlistIds))
       );
     } catch {
-    
+      // Storage unavailable or disabled
     }
   }, [wishlistIds]);
 
@@ -159,6 +168,44 @@ export const App: React.FC = () => {
     return PRODUCTS.filter((p) => wishlistIds.has(p.id));
   }, [wishlistIds]);
 
+  // Order Placement Handlers
+  const handleBuySingleItem = useCallback((product: Product) => {
+    const randomSuffix = Math.floor(100000 + Math.random() * 900000);
+    const newOrder: OrderData = {
+      orderId: `FRM-${randomSuffix}`,
+      items: [product],
+      total: product.price,
+      orderDate: getFormattedDate()
+    };
+    setOrderData(newOrder);
+
+    // Remove bought item from wishlist
+    setWishlistIds((prev) => {
+      const next = new Set(prev);
+      next.delete(product.id);
+      return next;
+    });
+
+    setIsWishlistOpen(false);
+    setSelectedProduct(null);
+  }, []);
+
+  const handleBuyAllWishlist = useCallback(() => {
+    if (wishlistProducts.length === 0) return;
+    const randomSuffix = Math.floor(100000 + Math.random() * 900000);
+    const total = wishlistProducts.reduce((sum, p) => sum + p.price, 0);
+
+    const newOrder: OrderData = {
+      orderId: `FRM-${randomSuffix}`,
+      items: [...wishlistProducts],
+      total,
+      orderDate: getFormattedDate()
+    };
+    setOrderData(newOrder);
+    setWishlistIds(new Set());
+    setIsWishlistOpen(false);
+  }, [wishlistProducts]);
+
   return (
     <div className="app-wrapper">
       {/* Header Landmark */}
@@ -228,9 +275,10 @@ export const App: React.FC = () => {
         isWishlisted={selectedProduct ? wishlistIds.has(selectedProduct.id) : false}
         onClose={() => setSelectedProduct(null)}
         onToggleWishlist={handleToggleWishlist}
+        onBuyItem={handleBuySingleItem}
       />
 
-      {/* Wishlist Side Drawer */}
+      {/* Wishlist Side Drawer with Buy Now & Checkout */}
       <WishlistDrawer
         isOpen={isWishlistOpen}
         wishlistProducts={wishlistProducts}
@@ -238,6 +286,14 @@ export const App: React.FC = () => {
         onRemoveItem={handleRemoveWishlistItem}
         onClearWishlist={handleClearWishlist}
         onSelectProduct={setSelectedProduct}
+        onBuyItem={handleBuySingleItem}
+        onBuyAll={handleBuyAllWishlist}
+      />
+
+      {/* Order Success Confirmation Popup */}
+      <OrderSuccessModal
+        orderData={orderData}
+        onClose={() => setOrderData(null)}
       />
     </div>
   );

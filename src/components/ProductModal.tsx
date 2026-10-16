@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { Product } from '../types/product';
 import { formatINR } from '../utils/productFilters';
-import { X, Heart, ShieldCheck, Truck, RefreshCw, Check, ImageOff } from 'lucide-react';
+import { X, Heart, ShieldCheck, Truck, RefreshCw, Check, ImageOff, ShoppingBag } from 'lucide-react';
 
 interface ProductModalProps {
   product: Product | null;
@@ -9,6 +9,7 @@ interface ProductModalProps {
   isWishlisted: boolean;
   onClose: () => void;
   onToggleWishlist: (product: Product) => void;
+  onBuyItem: (product: Product) => void;
 }
 
 export const ProductModal: React.FC<ProductModalProps> = ({
@@ -16,7 +17,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   isOpen,
   isWishlisted,
   onClose,
-  onToggleWishlist
+  onToggleWishlist,
+  onBuyItem
 }) => {
   const [imgError, setImgError] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -55,6 +57,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
+  };
+
+  const handleBuy = () => {
+    onBuyItem(product);
   };
 
   return (
@@ -116,7 +122,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
             <div className="modal-price-box">
               <span className="modal-price-value">{formatINR(product.price)}</span>
-              <span className="modal-tax-note">All taxes included · Complementary shipping</span>
+              <span className="modal-tax-note">All taxes included · Complimentary express shipping</span>
             </div>
 
             {product.description && (
@@ -154,6 +160,16 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             <div className="modal-action-row">
               <button
                 type="button"
+                className="modal-buy-now-btn"
+                onClick={handleBuy}
+                aria-label={`Buy ${product.name} now`}
+              >
+                <ShoppingBag size={18} aria-hidden="true" />
+                <span>Buy Now ({formatINR(product.price)})</span>
+              </button>
+
+              <button
+                type="button"
                 className={`modal-wishlist-toggle-btn ${isWishlisted ? 'is-active' : ''}`}
                 onClick={() => onToggleWishlist(product)}
                 aria-pressed={isWishlisted}
@@ -163,7 +179,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   className={isWishlisted ? 'heart-filled' : ''}
                   aria-hidden="true"
                 />
-                <span>{isWishlisted ? 'Saved in Wishlist' : 'Add to Wishlist'}</span>
+                <span>{isWishlisted ? 'Saved' : 'Save'}</span>
               </button>
 
               <button
