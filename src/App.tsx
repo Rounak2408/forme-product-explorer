@@ -264,7 +264,7 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer Landmark */}
-      <Footer />
+      <Footer onSelectCategory={handleCategorySelect} />
 
       {/* Product Detail Modal */}
       <ProductModal
