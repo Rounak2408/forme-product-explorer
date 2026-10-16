@@ -41,7 +41,6 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Search size={18} aria-hidden="true" />
             <span className="search-hint-text">Search</span>
-            <kbd className="kbd-shortcut" aria-hidden="true">/</kbd>
           </button>
 
           {/* Wishlist toggle */}
