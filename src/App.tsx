@@ -11,6 +11,7 @@ import { EmptyState } from './components/EmptyState';
 import { ProductModal } from './components/ProductModal';
 import { WishlistDrawer } from './components/WishlistDrawer';
 import { OrderSuccessModal, type OrderData } from './components/OrderSuccessModal';
+import { OrderToast } from './components/OrderToast';
 import { Footer } from './components/Footer';
 import './App.css';
 
@@ -44,6 +45,7 @@ export const App: React.FC = () => {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [orderData, setOrderData] = useState<OrderData | null>(null);
+  const [orderToast, setOrderToast] = useState<OrderData | null>(null);
 
   // Ref for search input in Hero section
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -177,7 +179,8 @@ export const App: React.FC = () => {
       total: product.price,
       orderDate: getFormattedDate()
     };
-    setOrderData(newOrder);
+    // Trigger corner notification
+    setOrderToast(newOrder);
 
     // Remove bought item from wishlist
     setWishlistIds((prev) => {
@@ -201,7 +204,8 @@ export const App: React.FC = () => {
       total,
       orderDate: getFormattedDate()
     };
-    setOrderData(newOrder);
+    // Trigger corner notification
+    setOrderToast(newOrder);
     setWishlistIds(new Set());
     setIsWishlistOpen(false);
   }, [wishlistProducts]);
@@ -286,6 +290,16 @@ export const App: React.FC = () => {
         onSelectProduct={setSelectedProduct}
         onBuyItem={handleBuySingleItem}
         onBuyAll={handleBuyAllWishlist}
+      />
+
+      {/* Corner Order Toast Notification */}
+      <OrderToast
+        order={orderToast}
+        onClose={() => setOrderToast(null)}
+        onViewDetails={() => {
+          setOrderData(orderToast);
+          setOrderToast(null);
+        }}
       />
 
       {/* Order Success Confirmation Popup */}
