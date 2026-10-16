@@ -244,5 +244,5 @@ This application is ready for zero-configuration deployment to [Vercel](https://
 
 ---
 
-**Author**: Principal Senior Frontend Engineer  
+**Author**: Sudhanshu Rounak
 **Assessment**: Round 2 Web Developer Practical Assessment — TechCrestaX
