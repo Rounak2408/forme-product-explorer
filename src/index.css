@@ -1,0 +1,176 @@
+/* ==========================================================================
+   FORME — DESIGN SYSTEM & BASE STYLES
+   Minimalist Luxury Editorial Commerce Experience
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --color-bg: #FAF8F5;
+  --color-surface: #FFFFFF;
+  --color-surface-subtle: #F3EFEA;
+  --color-surface-hover: #EBE6DE;
+  
+  --color-border: #E6E2D8;
+  --color-border-subtle: #EFECE5;
+  --color-border-strong: #C4BDAF;
+
+  --color-text: #191816;
+  --color-text-secondary: #5C5851;
+  --color-text-tertiary: #8A857B;
+  --color-text-inverse: #FAF8F5;
+
+  /* Accent Color: Refined Warm Terracotta / Cognac */
+  --color-accent: #9E461E;
+  --color-accent-hover: #833714;
+  --color-accent-subtle: #FBF2EC;
+  --color-accent-border: #E8BFAB;
+
+  /* Status Colors */
+  --color-success: #2C6E49;
+  --color-success-bg: #EEF7F2;
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* 8px Scale Spacing System */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Layout */
+  --max-width-container: 1320px;
+  --header-height: 72px;
+
+  /* Radii */
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-subtle: 0 1px 2px rgba(25, 24, 22, 0.04);
+  --shadow-card: 0 4px 14px -2px rgba(25, 24, 22, 0.04), 0 1px 3px rgba(25, 24, 22, 0.02);
+  --shadow-hover: 0 16px 32px -4px rgba(25, 24, 22, 0.08), 0 4px 8px -2px rgba(25, 24, 22, 0.03);
+  --shadow-modal: 0 24px 48px -12px rgba(25, 24, 22, 0.2), 0 8px 16px -4px rgba(25, 24, 22, 0.08);
+
+  /* Transitions */
+  --transition-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* CSS Reset & Defaults */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+}
+
+/* Accessible focus styling */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Common interactive defaults */
+button {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+input, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Container Utility */
+.container {
+  width: 100%;
+  max-width: var(--max-width-container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+/* Typography Utilities */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Global App Wrapper */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1 0 auto;
+}
