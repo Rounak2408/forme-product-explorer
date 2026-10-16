@@ -26,7 +26,6 @@ export const Hero: React.FC<HeroProps> = ({
       <div className="container hero-inner">
         {/* Subtle collection badge */}
         <div className="hero-eyebrow">
-          <span className="eyebrow-accent-line" aria-hidden="true"></span>
           <span className="eyebrow-text">Autumn / Winter Curated Archive · {totalCount} Objects</span>
         </div>
 
