@@ -2,16 +2,12 @@ import React from 'react';
 import { Sparkles, Heart, Search } from 'lucide-react';
 
 interface HeaderProps {
-  totalCount: number;
-  filteredCount: number;
   wishlistCount: number;
   onOpenWishlist: () => void;
   onFocusSearch: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  totalCount,
-  filteredCount,
   wishlistCount,
   onOpenWishlist,
   onFocusSearch
@@ -32,15 +28,6 @@ export const Header: React.FC<HeaderProps> = ({
           </a>
         </div>
 
-        {/* Collection & Catalog status */}
-        <div className="collection-status" aria-live="polite">
-          <span className="status-dot" aria-hidden="true"></span>
-          <span className="status-text">
-            {filteredCount === totalCount
-              ? `Curated Archive (${totalCount})`
-              : `Showing ${filteredCount} of ${totalCount}`}
-          </span>
-        </div>
 
         {/* Header Actions */}
         <div className="header-actions">

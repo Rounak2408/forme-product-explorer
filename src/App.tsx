@@ -210,8 +210,6 @@ export const App: React.FC = () => {
     <div className="app-wrapper">
       {/* Header Landmark */}
       <Header
-        totalCount={PRODUCTS.length}
-        filteredCount={filteredProducts.length}
         wishlistCount={wishlistIds.size}
         onOpenWishlist={() => setIsWishlistOpen(true)}
         onFocusSearch={handleFocusSearch}
